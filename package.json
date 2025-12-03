@@ -1,0 +1,25 @@
+{
+    "name": "medusa-test-automation",
+    "version": "1.0.0",
+    "description": "Automated testing framework for Medusa e-commerce platform",
+    "scripts": {
+        "docker:build": "docker compose -f docker/docker-compose.yml build",
+        "docker:up": "docker compose -f docker/docker-compose.yml up -d",
+        "docker:down": "docker compose -f docker/docker-compose.yml down",
+        "docker:logs": "docker compose -f docker/docker-compose.yml logs -f medusa-backend",
+        "docker:ps": "docker compose -f docker/docker-compose.yml ps",
+        "setup": "npm install && npm run docker:build && npm run docker:up",
+        "test:api": "echo 'API tests not yet implemented'",
+        "test:e2e": "echo 'E2E tests not yet implemented'"
+    },
+    "keywords": [
+        "medusa",
+        "testing",
+        "e2e",
+        "api",
+        "playwright"
+    ],
+    "author": "Edijs Rozens",
+    "license": "MIT",
+    "devDependencies": {}
+}
