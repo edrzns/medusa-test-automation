@@ -46,3 +46,24 @@ tests/
 ## Development
 
 See [docs/](docs/) for detailed documentation.
+
+## Known Issues & Solutions
+
+### SSL Connection Errors During Migration
+
+**Issue:** Medusa migrations fail with "The server does not support SSL connections"
+
+**Root Cause:** PostgreSQL in Docker doesn't enable SSL by default, but Medusa's database client attempts SSL connections.
+
+**Solution:** Disable SSL in `docker/medusa/medusa-config.ts`:
+```typescript
+export default defineConfig({
+  projectConfig: {
+    databaseDriverOptions: {
+      connection: { ssl: false }
+    }
+  }
+})
+```
+
+**Why this matters:** Shows you document blockers for future developers (recruiters love this).
