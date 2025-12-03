@@ -5,7 +5,7 @@ Automated testing framework for Medusa e-commerce platform showcasing SDET skill
 ## Prerequisites
 
 - Docker Desktop (or Docker Engine + Docker Compose)
-- Node.js LTS
+- Node.js 20
 - Git
 
 ## Quick Start
@@ -37,6 +37,7 @@ docker/
   ├── docker-compose.yml    # Service orchestration
   └── medusa/
       ├── Dockerfile        # Medusa container build
+      ├── medusa-config.ts  # Medusa configuration file
       └── start.sh          # Container startup script
 tests/
   ├── api/                  # API tests (coming soon)
@@ -65,5 +66,3 @@ export default defineConfig({
   }
 })
 ```
-
-**Why this matters:** Shows you document blockers for future developers (recruiters love this).
