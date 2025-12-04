@@ -1,0 +1,17 @@
+{
+  "name": "medusa-tests",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "test:api": "vitest run --config api/vitest.config.ts",
+    "test:api:watch": "vitest watch --config api/vitest.config.ts",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^24.10.1",
+    "axios": "^1.13.2",
+    "vitest": "^4.0.15"
+  }
+}
