@@ -1,0 +1,51 @@
+name: API Tests
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install root dependencies
+        run: npm install
+
+      - name: Install test dependencies
+        run: cd tests && npm install
+
+      - name: Start Medusa services
+        run: |
+          docker compose -f docker/docker-compose.yml up -d
+          echo "Waiting for services to be healthy..."
+          timeout 120 bash -c 'until docker compose -f docker/docker-compose.yml ps | grep -q "healthy"; do sleep 2; done'
+
+      - name: Create admin user
+        run: |
+          docker exec medusa_backend npx medusa user -e admin@test.com -p supersecret || echo "User already exists"
+
+      - name: Run API tests
+        run: npm run test:api
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: tests/coverage/
+
+      - name: Cleanup
+        if: always()
+        run: docker compose -f docker/docker-compose.yml down
