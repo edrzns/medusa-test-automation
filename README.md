@@ -4,8 +4,8 @@ Automated testing framework for Medusa e-commerce platform showcasing SDET skill
 
 ## Prerequisites
 
-- Docker Desktop (or Docker Engine + Docker Compose)
-- Node.js LTS
+- Docker
+- Node.js 20
 - Git
 
 ## Quick Start

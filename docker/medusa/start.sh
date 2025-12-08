@@ -25,7 +25,7 @@ echo "Redis is ready"
 echo "Running database migrations..."
 npx medusa db:migrate
 
-# Seed initial data (we'll enhance this later)
+# Seed initial data
 echo "Seeding database..."
 npm run seed || echo "Seed data not available yet"
 
