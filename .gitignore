@@ -1,6 +1,6 @@
 # Dependencies
 node_modules/
-package-lock.json
+#package-lock.json
 yarn.lock
 
 # Test outputs
@@ -24,3 +24,12 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+
+# Playwright
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+test-results/
+playwright-report/
+playwright/.cache/
