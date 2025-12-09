@@ -9,8 +9,12 @@
     "docker:logs": "docker compose -f docker/docker-compose.yml logs -f medusa-backend",
     "docker:ps": "docker compose -f docker/docker-compose.yml ps",
     "setup": "npm install && npm run docker:build && npm run docker:up",
-    "test:api": "echo 'API tests not yet implemented'",
-    "test:e2e": "echo 'E2E tests not yet implemented'"
+    "admin:create": "./scripts/create-admin.sh",
+    "test": "npx playwright test",
+    "test:api": "npx playwright test --project=api",
+    "test:e2e": "npx playwright test --project=chromium-e2e",
+    "test:ui": "npx playwright test --ui",
+    "test:report": "npx playwright show-report"
   },
   "keywords": [
     "medusa",
