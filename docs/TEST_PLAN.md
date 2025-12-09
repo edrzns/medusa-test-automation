@@ -138,7 +138,7 @@ tests/api/
 │   ├── order-creation.test.ts
 │   └── order-management.test.ts
 └── helpers/
-    ├── auth.ts (DONE)
+    ├── auth.ts
     ├── products.ts
     ├── cart.ts
     └── test-data.ts
@@ -275,7 +275,7 @@ Scheduled: Full suite + multiple browsers
 ### Phase 1: API Foundation
 - [x] Authentication tests
 - [x] Auth helper utility
-- [ ] Test data helpers
+- [x] Test data helpers
 - [ ] Product CRUD tests
 
 ### Phase 2: API Expansion
