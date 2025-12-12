@@ -1,71 +1,32 @@
 import { test, expect } from "@playwright/test";
-import { makeAdminRequest } from "../helpers/auth";
-import { generateTestProduct } from "../helpers/test-data";
+import { createTestProduct } from "../helpers/products";
 
-test.describe("Product API Tests", () => {
+test.describe("Admin Product CRUD", () => {
+  
   test("should create product with valid data", async ({ request }) => {
-    // Generate test product data
-    const productData = generateTestProduct();
-
-    // Create product via API
-    const response = await makeAdminRequest(
-      request,
-      "POST",
-      "/admin/products",
-      productData
-    );
-
-    // Verify the response is successful
-    expect(response.ok()).toBeTruthy();
-    expect(response.status()).toBe(200);
-
-    // Parse response data
-    const responseData = await response.json();
-
-    // Verify the ID is present and valid
-    expect(responseData.product.id).toBeTruthy();
-    expect(typeof responseData.product.id).toBe("string");
-  });
+    const product = await createTestProduct(request)
+    
+    // Verify the product was created successfully
+    expect(product.id).toBeTruthy()
+    expect(typeof product.id).toBe("string")
+  })
 
   test("should generate valid handle format", async ({ request }) => {
-    // Generate test product data
-    const productData = generateTestProduct();
-
-    // Create product via API
-    const response = await makeAdminRequest(
-      request,
-      "POST",
-      "/admin/products",
-      productData
-    );
-
-    // Parse response data
-    const responseData = await response.json();
-
-    // Verify auto-generated handle is present and valid
-    expect(responseData.product.handle).toBeTruthy();
-    expect(typeof responseData.product.handle).toBe("string");
-    expect(responseData.product.handle).toMatch(/^[a-z0-9\-]+$/);
-  });
+    const product = await createTestProduct(request)
+    
+    // Verify auto-generated handle
+    expect(product.handle).toBeTruthy()
+    expect(typeof product.handle).toBe("string")
+    expect(product.handle).toMatch(/^[a-z0-9\-]+$/)
+  })
 
   test("should persist product data correctly", async ({ request }) => {
-    // Generate test product data
-    const productData = generateTestProduct();
-
-    // Create product via API
-    const response = await makeAdminRequest(
-      request,
-      "POST",
-      "/admin/products",
-      productData
-    );
-
-    // Parse response data
-    const responseData = await response.json();
-
+    const customTitle = `Custom Product ${Date.now()}`
+    const product = await createTestProduct(request, { title: customTitle })
+    
     // Verify that the created product contains input data
-    expect(responseData.product.title).toBe(productData.title);
-    expect(responseData.product.options).toBeDefined();
-    expect(responseData.product.options.length).toBeGreaterThan(0);
-  });
-});
+    expect(product.title).toBe(customTitle)
+    expect(product.options).toBeDefined()
+    expect(product.options.length).toBeGreaterThan(0)
+  })
+})
