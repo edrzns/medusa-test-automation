@@ -4,7 +4,7 @@ import { generateTestProduct } from './test-data'
 
 /**
  * Create a test product via admin API
- * Returns the created product data including ID
+ * Returns the created product data including ID and variants
  */
 export async function createTestProduct(
   request: APIRequestContext,
@@ -20,7 +20,8 @@ export async function createTestProduct(
   )
   
   if (!response.ok()) {
-    throw new Error(`Failed to create product: ${response.status()}`)
+    const errorBody = await response.text()
+    throw new Error(`Failed to create product: ${response.status()} - ${errorBody}`)
   }
   
   const data = await response.json()
@@ -28,13 +29,17 @@ export async function createTestProduct(
 }
 
 /**
- * Get product by ID via store API (no auth needed)
+ * Get product by ID via admin API
  */
-export async function getStoreProduct(
+export async function getAdminProduct(
   request: APIRequestContext,
   productId: string
 ) {
-  const response = await request.get(`http://localhost:9000/store/products/${productId}`)
+  const response = await makeAdminRequest(
+    request,
+    'GET',
+    `/admin/products/${productId}`
+  )
   
   if (!response.ok()) {
     throw new Error(`Failed to get product: ${response.status()}`)
@@ -45,26 +50,25 @@ export async function getStoreProduct(
 }
 
 /**
- * List all store products (no auth needed)
+ * List all admin products
  */
-export async function listStoreProducts(
+export async function listAdminProducts(
   request: APIRequestContext,
-  params?: { limit?: number; offset?: number; q?: string }
+  params?: { limit?: number; offset?: number }
 ) {
-  let url = 'http://localhost:9000/store/products'
+  let url = '/admin/products'
   
   if (params) {
     const searchParams = new URLSearchParams()
     if (params.limit) searchParams.set('limit', params.limit.toString())
     if (params.offset) searchParams.set('offset', params.offset.toString())
-    if (params.q) searchParams.set('q', params.q)
     
     if (searchParams.toString()) {
       url += `?${searchParams.toString()}`
     }
   }
   
-  const response = await request.get(url)
+  const response = await makeAdminRequest(request, 'GET', url)
   
   if (!response.ok()) {
     throw new Error(`Failed to list products: ${response.status()}`)
