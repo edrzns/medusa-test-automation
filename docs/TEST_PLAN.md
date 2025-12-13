@@ -276,12 +276,19 @@ Scheduled: Full suite + multiple browsers
 - [x] Authentication tests
 - [x] Auth helper utility
 - [x] Test data helpers
-- [ ] Product CRUD tests
+- [x] Product CRUD tests
 
 ### Phase 2: API Expansion
 - [ ] Cart operations
 - [ ] Order creation
 - [ ] Error scenario coverage
+
+### Implementation Notes
+**Cart Testing Approach:**
+- Using admin cart endpoints (`/admin/carts`) instead of store endpoints (`/store/carts`)
+- Rationale: Admin endpoints provide equivalent cart functionality without publishable key complexity
+- Benefits: Simpler authentication, same business logic coverage, easier CI/CD setup
+- Trade-off: Not testing customer-facing store API, but validating core cart operations
 
 ### Phase 3: E2E Setup
 - [ ] Page object structure
