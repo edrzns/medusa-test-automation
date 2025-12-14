@@ -279,16 +279,17 @@ Scheduled: Full suite + multiple browsers
 - [x] Product CRUD tests
 
 ### Phase 2: API Expansion
-- [ ] Cart operations
+- [x] Cart operations (1 scenario)
+- [x] Cart helper (admin draft-orders)
+- [ ] Cart item manipulation (blocked by API limitations)
 - [ ] Order creation
 - [ ] Error scenario coverage
 
-### Implementation Notes
-**Cart Testing Approach:**
-- Using admin cart endpoints (`/admin/carts`) instead of store endpoints (`/store/carts`)
-- Rationale: Admin endpoints provide equivalent cart functionality without publishable key complexity
-- Benefits: Simpler authentication, same business logic coverage, easier CI/CD setup
-- Trade-off: Not testing customer-facing store API, but validating core cart operations
+**Implementation Notes:**
+- **Cart Testing Limitation:** Medusa v2 draft-order API tested doesn't support line-item manipulation after creation (`/admin/draft-orders/:id/line-items` returns 404)
+- **Workaround Evaluated:** Attempted store API with publishable keys, but authentication complexity and time constraints led to pragmatic decision to focus on working admin endpoints
+- **Coverage Achieved:** Cart/draft-order creation validated; demonstrates API interaction patterns even without full CRUD
+- **Future Enhancement:** Investigate Medusa store API with proper publishable key configuration, or test against newer Medusa version with enhanced draft-order support
 
 ### Phase 3: E2E Setup
 - [ ] Page object structure
@@ -298,7 +299,7 @@ Scheduled: Full suite + multiple browsers
 ### Phase 4: Polish
 - [ ] Cross-browser E2E
 - [ ] CI/CD integration
-- [ ] Documentation
+- [x] Documentation
 
 ## 11. Risk Areas
 
@@ -317,3 +318,37 @@ Scheduled: Full suite + multiple browsers
 - Medusa API Documentation: https://docs.medusajs.com/api/store
 - Playwright Best Practices: https://playwright.dev/docs/best-practices
 - Test Pyramid Concept: https://martinfowler.com/articles/practical-test-pyramid.html
+
+## 13. Current Status
+
+**Test Coverage Summary:**
+```
+API Tests: 13 scenarios
+├── Authentication: 4 tests
+├── Products (Admin): 8 tests
+│   ├── CRUD Operations: 3 tests
+│   └── Read Operations: 5 tests
+└── Cart (Draft Orders): 1 test
+
+E2E Tests: 0 scenarios
+
+Total Passing: 13/13 (100%)
+Execution Time: ~4 seconds
+```
+
+**Key Achievements:**
+- Helper pattern established (auth, products, cart)
+- Test data generation with unique identifiers
+- Proper error handling and assertions
+- Clean test organization following plan structure
+
+**Known Limitations:**
+- Cart item manipulation blocked by Medusa API version
+- E2E tests deferred due to timeline prioritization (will return later)
+- Store API not tested (publishable key complexity)
+
+**Lessons Learned:**
+- API version compatibility matters—test early
+- Pragmatic pivots beat perfect solutions under time pressure
+- Document limitations transparently
+- Working tests > comprehensive broken tests
