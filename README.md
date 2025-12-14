@@ -27,6 +27,32 @@ This project showcases API test automation skills by building a test suite again
 - Fully parallelized execution
 - No flaky tests
 
+## CI/CD Integration
+
+**Automated Testing Pipeline:**
+- Runs on every push to main/master
+- Executes on all pull requests
+- Uses Docker Compose for service orchestration
+- Full environment setup: Postgres + Redis + Medusa backend
+- Average CI run time: ~12-15 minutes (includes Docker build)
+
+**Pipeline Steps:**
+1. Checkout code
+2. Setup Node.js 20 with npm cache
+3. Install project dependencies
+4. Install Playwright browsers (Chromium only for speed)
+5. Start services via Docker Compose
+6. Wait for Medusa health check
+7. Run API test suite (13 tests)
+8. Upload test results and reports as artifacts
+
+**Artifact Retention:**
+- Test reports available for 30 days
+- Playwright HTML report with trace viewer
+- Test results for debugging failures
+
+**View Latest Run:** [GitHub Actions](https://github.com/edrzns/medusa-test-automation/actions)
+
 ## Architecture & Design Decisions
 
 ### Helper Pattern Structure
